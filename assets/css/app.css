@@ -1,0 +1,10 @@
+/* This file is for your main application css. */
+
+@import "./phoenix.css";
+
+html, body {
+  height: 100%;
+}
+
+#mapid { height: 100%; }
+
