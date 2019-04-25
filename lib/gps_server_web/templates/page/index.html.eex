@@ -29,7 +29,7 @@
 
 
    var realtime = L.realtime({
-     url: 'http://localhost:4000/api/position',
+     url: '/api/position',
      crossOrigin: true,
      type: 'json'
    }, {
