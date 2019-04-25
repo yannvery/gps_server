@@ -21,9 +21,10 @@ defmodule GpsServer.Position do
   def to_geojson(position = %__MODULE__{}) do
     %{
       type: "Feature",
+      properties: %{},
       geometry: %{
         type: "Point",
-        coordinates: [position.latitude, position.longitude]
+        coordinates: [position.longitude, position.latitude]
       }
     }
   end
