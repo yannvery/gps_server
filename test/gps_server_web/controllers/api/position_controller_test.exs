@@ -7,7 +7,8 @@ defmodule GpsServerWeb.Api.PositionControllerTest do
 
       assert json_response(conn, 200) == %{
                "geometry" => %{"coordinates" => [0, 0], "type" => "Point"},
-               "type" => "Feature"
+               "type" => "Feature",
+               "properties" => %{}
              }
     end
   end
@@ -18,8 +19,9 @@ defmodule GpsServerWeb.Api.PositionControllerTest do
       conn = post(conn, "/api/position", params)
 
       assert json_response(conn, 201) == %{
-               "geometry" => %{"coordinates" => [12, 24], "type" => "Point"},
-               "type" => "Feature"
+               "geometry" => %{"coordinates" => [24.0, 12.0], "type" => "Point"},
+               "type" => "Feature",
+               "properties" => %{}
              }
     end
 
