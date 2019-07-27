@@ -12,6 +12,12 @@
       })
     ]
   });
+  var polylinePoints = [<%= for position <- @path do %>
+      [<%= List.first(position) %>, <%= List.last(position)%>],
+  <% end %>
+  ];
+
+  var polyline = L.polyline(polylinePoints).addTo(map);
   var realtime = L.realtime({
     url: '/api/position',
     crossOrigin: true,
