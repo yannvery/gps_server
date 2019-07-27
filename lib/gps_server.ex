@@ -20,4 +20,8 @@ defmodule GpsServer do
     |> GpsServer.Position.changeset(params)
     |> GpsServer.Repo.insert()
   end
+
+  def last_path() do
+    GpsServer.Repo.last_path()
+  end
 end

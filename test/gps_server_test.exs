@@ -32,4 +32,19 @@ defmodule GpsServer.Test do
     {:ok, position} = GpsServer.create_position(params)
     assert position == GpsServer.last_position()
   end
+
+  describe "last_path/0" do
+    test "it returns the last path when available on DB" do
+      path = insert(:path)
+      last_path = GpsServer.last_path()
+
+      assert last_path == path
+    end
+
+    test "returns nil when there is no path" do
+      last_path = GpsServer.last_path()
+
+      assert last_path == nil
+    end
+  end
 end

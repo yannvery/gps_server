@@ -9,4 +9,11 @@ defmodule GpsServer.Factory do
       issued_at: NaiveDateTime.utc_now()
     }
   end
+
+  def path_factory do
+    %GpsServer.Path{
+      title: "title",
+      description: "description"
+    }
+  end
 end
