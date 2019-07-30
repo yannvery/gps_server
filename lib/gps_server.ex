@@ -24,4 +24,13 @@ defmodule GpsServer do
   def last_path() do
     GpsServer.Repo.last_path()
   end
+
+  def create_path() do
+    datetime = NaiveDateTime.utc_now() |> NaiveDateTime.to_string()
+    params = %{title: "Path - #{datetime}", description: "Start at #{datetime}"}
+
+    %GpsServer.Path{}
+    |> GpsServer.Path.changeset(params)
+    |> GpsServer.Repo.insert()
+  end
 end

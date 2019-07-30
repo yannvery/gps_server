@@ -47,4 +47,12 @@ defmodule GpsServer.Test do
       assert last_path == nil
     end
   end
+
+  describe "create_path/0" do
+    test "it returns a path with default values" do
+      {:ok, path} = GpsServer.create_path()
+      assert String.starts_with?(path.title, "Path -")
+      assert String.starts_with?(path.description, "Start at")
+    end
+  end
 end

@@ -6,7 +6,8 @@ defmodule GpsServer.Factory do
     %GpsServer.Position{
       longitude: 25.060531666667,
       latitude: 121.600165,
-      issued_at: NaiveDateTime.utc_now()
+      issued_at: NaiveDateTime.utc_now(),
+      path: build(:path)
     }
   end
 
