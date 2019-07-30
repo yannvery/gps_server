@@ -8,14 +8,13 @@ defmodule GpsServerWeb.PageController do
   end
 
   def get_path() do
-    import Ecto.Query
+    case GpsServer.last_path() do
+      nil ->
+        []
 
-    query =
-      from p in GpsServer.Position,
-        where: p.inserted_at > type(^~N[2019-05-02 00:00:00], :naive_datetime),
-        order_by: [asc: p.id]
-
-    GpsServer.Repo.all(query)
-    |> Enum.map(fn x -> [x.latitude, x.longitude] end)
+      path ->
+        path = GpsServer.Repo.preload(path, :positions)
+        path.positions |> Enum.map(fn x -> [x.latitude, x.longitude] end)
+    end
   end
 end
