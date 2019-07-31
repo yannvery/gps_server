@@ -3,7 +3,10 @@ defmodule GpsServerWeb.Api.PositionController do
 
   def show(conn, _params) do
     geo_point = GpsServer.last_position() |> GpsServer.Position.to_geojson()
-    json(conn, geo_point)
+    geo_path = GpsServer.last_path() |> GpsServer.Path.to_geojson()
+    features_collection = %{type: "FeatureCollection", features: [geo_point, geo_path]}
+
+    json(conn, features_collection)
   end
 
   def create(conn, params) do

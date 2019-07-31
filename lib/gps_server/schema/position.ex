@@ -24,7 +24,7 @@ defmodule GpsServer.Position do
   def to_geojson(position = %__MODULE__{}) do
     %{
       type: "Feature",
-      properties: %{},
+      properties: %{id: "position"},
       geometry: %{
         type: "Point",
         coordinates: [position.longitude, position.latitude]
@@ -58,9 +58,9 @@ defmodule GpsServer.Position do
   end
 
   defp active_path(position) do
-    date_time_limit = NaiveDateTime.add(NaiveDateTime.utc_now(), 300, :second)
+    date_time_limit = NaiveDateTime.add(position.inserted_at, 60, :second)
 
-    case NaiveDateTime.compare(position.inserted_at, date_time_limit) do
+    case NaiveDateTime.compare(NaiveDateTime.utc_now(), date_time_limit) do
       :lt ->
         position.path
 
