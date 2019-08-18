@@ -15,8 +15,10 @@ defmodule GpsServer.Position do
   end
 
   def changeset(position, params \\ %{}) do
+    params_with_issued_at = add_issued_at_to_params(params)
+
     position
-    |> cast(params, [:longitude, :latitude, :issued_at])
+    |> cast(params_with_issued_at, [:longitude, :latitude, :issued_at])
     |> associate_to_path()
     |> validate_required([:longitude, :latitude])
   end
@@ -68,5 +70,22 @@ defmodule GpsServer.Position do
         {:ok, path} = GpsServer.create_path()
         path
     end
+  end
+
+  def add_issued_at_to_params(%{"time" => epoch_string} = params) do
+    epoch_time = String.to_integer(epoch_string)
+    Map.put(params, "issued_at", NaiveDateTime.add(~N[1970-01-01 00:00:00], epoch_time))
+  end
+
+  def add_issued_at_to_params(%{"issued_at" => nil} = params) do
+    %{params | "issued_at" => NaiveDateTime.utc_now()}
+  end
+
+  def add_issued_at_to_params(%{"issued_at" => %NaiveDateTime{}} = params) do
+    params
+  end
+
+  def add_issued_at_to_params(params) do
+    Map.put(params, "issued_at", NaiveDateTime.utc_now())
   end
 end

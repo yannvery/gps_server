@@ -30,6 +30,10 @@ defmodule GpsServer.Path do
     }
   end
 
+  def to_geojson(nil) do
+    %{}
+  end
+
   def coordinates(nil), do: []
 
   def coordinates(path = %__MODULE__{}) do
