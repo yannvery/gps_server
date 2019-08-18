@@ -40,7 +40,7 @@ defmodule GpsServer.Path do
     import Ecto.Query
 
     query =
-      from p in GpsServer.Position, where: p.path_id == ^path.id, order_by: [asc: :inserted_at]
+      from p in GpsServer.Position, where: p.path_id == ^path.id, order_by: [asc: :issued_at]
 
     positions = GpsServer.Repo.all(query)
     Enum.map(positions, fn p -> [p.longitude, p.latitude] end)
