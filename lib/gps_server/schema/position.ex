@@ -72,9 +72,27 @@ defmodule GpsServer.Position do
     end
   end
 
-  def add_issued_at_to_params(%{"time" => epoch_string} = params) do
-    epoch_time = String.to_integer(epoch_string)
-    Map.put(params, "issued_at", NaiveDateTime.add(~N[1970-01-01 00:00:00], epoch_time))
+  def add_issued_at_to_params(
+        %{
+          "time" =>
+            <<hours::bytes-size(2), minutes::bytes-size(2), seconds::bytes-size(2)>> <>
+              "." <> <<mseconds::bytes-size(2)>>
+        } = params
+      ) do
+    now = NaiveDateTime.utc_now()
+
+    {:ok, issued_at} =
+      NaiveDateTime.new(
+        now.year,
+        now.month,
+        now.day,
+        String.to_integer(hours),
+        String.to_integer(minutes),
+        String.to_integer(seconds),
+        String.to_integer(mseconds)
+      )
+
+    Map.put(params, "issued_at", issued_at)
   end
 
   def add_issued_at_to_params(%{"issued_at" => nil} = params) do
